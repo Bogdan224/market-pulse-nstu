@@ -7,6 +7,8 @@ import academy.backend.market_pulse.model.Bond;
 import academy.backend.market_pulse.model.Currency;
 import academy.backend.market_pulse.model.Etf;
 import academy.backend.market_pulse.model.Instrument;
+import academy.backend.market_pulse.model.Portfolio;
+import academy.backend.market_pulse.model.PortfolioImpl;
 import academy.backend.market_pulse.model.Quote;
 import academy.backend.market_pulse.model.Stock;
 
@@ -38,7 +40,16 @@ public class Main {
         System.out.println(ofzQuote);
         System.out.println("Дивиденды по котировке: " + ofzQuote.getDividends());
 
-        // TODO: построить Portfolio, добавить позиции (sber x10, ofz x5, tmos x3)
-        // и вывести список позиций.
+        // Portfolio — композиция: Position создаётся и живёт только внутри портфеля.
+        Portfolio portfolio = new PortfolioImpl("Пенсия Серёжи");
+        portfolio.addPosition(sber, 10);
+        portfolio.addPosition(ofz, 5);
+        portfolio.addPosition(tmos, 3);
+
+        System.out.println("Портфель: " + portfolio.getName());
+        for (Portfolio.Position position : portfolio.getPositions()) {
+            System.out.println("  " + position.getInstrument().getTicker()
+                    + " x " + position.getQuantity());
+        }
     }
 }
