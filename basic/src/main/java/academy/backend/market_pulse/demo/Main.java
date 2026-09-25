@@ -18,8 +18,8 @@ public class Main {
                 new BigDecimal("7.1"), 2035);
         Etf tmos = new Etf("TMOS", "Тинькофф iMOEX", Currency.RUB, "MOEX");
 
-        // NOTICE: toString() каждого инструмента вызывает getDescription() —
-        // до реализации метода в Stock/Bond/Etf этот вызов бросает исключение.
+        // Полиморфизм подтипов: getDescription() вызывается разный для каждого
+        // конкретного типа, хотя обращаемся мы к ним через общий тип Instrument.
         List<Instrument> instruments = List.of(sber, ofz, tmos);
         for (Instrument instrument : instruments) {
             System.out.println(instrument);
