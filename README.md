@@ -1,7 +1,6 @@
-# 03. Market Pulse NSTU
+# Market Pulse NSTU
 
-Семинар курса «Т-Академия», запуск «Т-Академия 2026», трек «Java». Семинар курса «Т-Академия», запуск «Т-Академия 2026», трек «Java». 
-Исходный код проекта, разрабатываемого в рамках курса по Java.
+Семинар курса «Т-Академия», запуск «Т-Академия 2026», трек «Java». Исходный код проекта, разрабатываемого в рамках базового трека курса по Java.
 
 ## Getting started
 
@@ -16,14 +15,14 @@ Already a pro? Just edit this README.md and make it your own. Want to make it ea
 
 ```
 cd existing_repo
-git remote add origin https://gitlab.education.tbank.ru/t-academy-2026/java/materials-drafts/market-pulse-nstu.git
+git remote add origin https://gitlab.education.tbank.ru/t-academy-2026/java/materials-drafts/market-pulse.git
 git branch -M master
 git push -uf origin master
 ```
 
 ## Integrate with your tools
 
-* [Set up project integrations](https://gitlab.education.tbank.ru/t-academy-2026/java/materials-drafts/market-pulse-nstu/-/settings/integrations)
+* [Set up project integrations](https://gitlab.education.tbank.ru/t-academy-2026/java/materials-drafts/market-pulse/-/settings/integrations)
 
 ## Collaborate with your team
 
