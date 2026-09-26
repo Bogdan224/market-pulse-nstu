@@ -26,7 +26,7 @@ public class Stock extends Instrument {
     }
 
     public BigDecimal getDividends(BigDecimal currentPrice) {
-        // TODO: currentPrice * dividendYield / 100, с явным RoundingMode.
-        throw new UnsupportedOperationException("getDividends для Stock");
+        return currentPrice.multiply(dividendYield)
+                .divide(BigDecimal.valueOf(100), 2, RoundingMode.HALF_UP);
     }
 }
