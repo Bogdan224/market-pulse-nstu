@@ -21,4 +21,10 @@ public class Bond extends Instrument {
     public int getMaturityYear() {
         return maturityYear;
     }
+
+    @Override
+    public String getDescription() {
+        // TODO: описание облигации — купон и год погашения.
+        throw new UnsupportedOperationException("getDescription для Bond");
+    }
 }

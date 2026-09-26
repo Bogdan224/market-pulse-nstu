@@ -1,7 +1,5 @@
 package academy.backend.market_pulse.model;
 
-import academy.backend.market_pulse.util.InstrumentFormatter;
-
 /**
  * Базовая абстракция финансового инструмента. Инкапсулирует общие для всех
  * инструментов данные (тикер, название, валюта) и защищает их инварианты
@@ -36,8 +34,10 @@ public abstract class Instrument {
         return currency;
     }
 
+    public abstract String getDescription();
+
     @Override
     public String toString() {
-        return ticker + " — " + name + " (" + InstrumentFormatter.describe(this) + ")";
+        return ticker + " — " + name + " (" + getDescription() + ")";
     }
 }

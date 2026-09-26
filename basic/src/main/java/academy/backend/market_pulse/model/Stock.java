@@ -18,4 +18,10 @@ public class Stock extends Instrument {
     public String getSector() {
         return sector;
     }
+
+    @Override
+    public String getDescription() {
+        // TODO: описание акции — сектор.
+        throw new UnsupportedOperationException("getDescription для Stock");
+    }
 }

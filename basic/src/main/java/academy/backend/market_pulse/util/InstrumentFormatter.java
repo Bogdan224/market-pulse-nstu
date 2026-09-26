@@ -11,8 +11,11 @@ import academy.backend.market_pulse.model.Stock;
  * обновить все такие цепочки по кодовой базе, компилятор об этом не
  * предупредит.
  *
+ * @deprecated неполиморфная реализация - ответственность далеко от типа
+ *
  * Удалить после рефакторинга.
  */
+@Deprecated
 public class InstrumentFormatter {
 
     private InstrumentFormatter() {
