@@ -1,6 +1,7 @@
 package academy.backend.market_pulse.model;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class Stock extends Instrument {
 
@@ -22,5 +23,10 @@ public class Stock extends Instrument {
     @Override
     public String getDescription() {
         return "Акция, сектор: " + sector;
+    }
+
+    public BigDecimal getDividends(BigDecimal currentPrice) {
+        // TODO: currentPrice * dividendYield / 100, с явным RoundingMode.
+        throw new UnsupportedOperationException("getDividends для Stock");
     }
 }
