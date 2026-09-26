@@ -7,6 +7,7 @@ import academy.backend.market_pulse.model.Bond;
 import academy.backend.market_pulse.model.Currency;
 import academy.backend.market_pulse.model.Etf;
 import academy.backend.market_pulse.model.Instrument;
+import academy.backend.market_pulse.model.Quote;
 import academy.backend.market_pulse.model.Stock;
 
 public class Main {
@@ -25,7 +26,17 @@ public class Main {
             System.out.println(instrument);
         }
 
-        // TODO: построить Quote для sber и ofz, вывести котировки и дивиденды по ним.
+        // Quote — агрегация: одна и та же акция может быть частью любого числа
+        // котировок. getDividends() здесь корректен, т.к. цена уже известна.
+        Quote sberQuote = new Quote(sber, new BigDecimal("278.50"), new BigDecimal("1.2"));
+        System.out.println(sberQuote);
+        System.out.println("Дивиденды по котировке: " + sberQuote.getDividends());
+
+        // Bond и Etf дивидендов не платят — Quote.getDividends() честно
+        // возвращает ZERO, не нарушая LSP (метод не объявлен в Instrument).
+        Quote ofzQuote = new Quote(ofz, new BigDecimal("980.00"), new BigDecimal("-0.3"));
+        System.out.println(ofzQuote);
+        System.out.println("Дивиденды по котировке: " + ofzQuote.getDividends());
 
         // TODO: построить Portfolio, добавить позиции (sber x10, ofz x5, tmos x3)
         // и вывести список позиций.
