@@ -3,14 +3,8 @@ package academy.backend.market_pulse.demo;
 import java.math.BigDecimal;
 import java.util.List;
 
-import academy.backend.market_pulse.model.Bond;
-import academy.backend.market_pulse.model.Currency;
-import academy.backend.market_pulse.model.Etf;
-import academy.backend.market_pulse.model.Instrument;
-import academy.backend.market_pulse.model.Portfolio;
-import academy.backend.market_pulse.model.PortfolioImpl;
-import academy.backend.market_pulse.model.Quote;
-import academy.backend.market_pulse.model.Stock;
+import academy.backend.market_pulse.model.*;
+import academy.backend.market_pulse.model.alt.User;
 
 public class Main {
 
@@ -41,7 +35,15 @@ public class Main {
         System.out.println("Дивиденды по котировке: " + ofzQuote.getDividends());
 
         // Portfolio — композиция: Position создаётся и живёт только внутри портфеля.
-        Portfolio portfolio = new PortfolioImpl("Пенсия Серёжи");
+        Portfolio portfolioDefault = new PortfolioImpl("Пенсия Серёжи");
+        testPortfolio(portfolioDefault, sber, ofz, tmos);
+
+        // Воплощение магии ООП: инкапсуляции и полиморфизма.
+        Portfolio portfolioUser = new User("Илья");
+        testPortfolio(portfolioUser, sber, ofz, tmos);
+    }
+
+    private static void testPortfolio(Portfolio portfolio, Stock sber, Bond ofz, Etf tmos) {
         portfolio.addPosition(sber, 10);
         portfolio.addPosition(ofz, 5);
         portfolio.addPosition(tmos, 3);
