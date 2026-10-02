@@ -20,9 +20,22 @@ public class Stock extends Instrument {
         return sector;
     }
 
+    /**
+     * Дивидендная доходность в процентах — единственный числовой атрибут акции на этом этапе
+     * проекта, используется в том числе как «аналог цены» в фильтрации ({@code PriceFilter}).
+     */
+    public BigDecimal getDividendYield() {
+        return dividendYield;
+    }
+
     @Override
     public String getDescription() {
         return "Акция, сектор: " + sector;
+    }
+
+    @Override
+    public String getType() {
+        return "STOCK";
     }
 
     public BigDecimal getDividends(BigDecimal currentPrice) {
