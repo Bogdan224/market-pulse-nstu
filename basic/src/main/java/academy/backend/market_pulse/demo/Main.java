@@ -7,6 +7,8 @@ import academy.backend.market_pulse.cli.SearchCommand;
 import academy.backend.market_pulse.repository.InstrumentRepository;
 import picocli.CommandLine;
 
+import java.util.Scanner;
+
 /**
  * Точка входа CLI. Команды регистрируются вручную через {@code addSubcommand}, а не через
  * атрибут {@code subcommands} аннотации {@code @Command}: у команд нет конструктора без
@@ -21,7 +23,11 @@ public class Main {
                 .addSubcommand(new SearchCommand(repository))
                 .addSubcommand(new AddCommand(repository))
                 .addSubcommand(new ListCommand(repository));
-        int exitCode = cli.execute(args);
-        System.exit(exitCode);
+
+        Scanner sc = new Scanner(System.in);
+        for (;;) {
+            int exitCode = cli.execute(sc.nextLine().split(" "));
+//            System.exit(exitCode);
+        }
     }
 }
