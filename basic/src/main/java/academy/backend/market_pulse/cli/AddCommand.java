@@ -34,7 +34,7 @@ public class AddCommand implements Callable<Integer> {
     public Integer call() {
         Instrument instrument = InstrumentFactories.create(type, ticker, name, currency);
         repository.add(instrument);
-        System.out.println("Добавлено: " + instrument.getDescription());
+        System.out.println("Добавлено: " + instrument);
         return 0;
     }
 }

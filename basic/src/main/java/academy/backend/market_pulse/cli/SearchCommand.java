@@ -26,7 +26,7 @@ public class SearchCommand implements Callable<Integer> {
             System.out.println("Инструмент не найден: " + ticker);
             return 1;
         }
-        System.out.println(instrument.getDescription());
+        System.out.println(instrument);
         return 0;
     }
 }
