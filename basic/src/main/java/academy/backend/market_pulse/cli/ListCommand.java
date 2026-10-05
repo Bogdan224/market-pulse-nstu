@@ -52,7 +52,7 @@ public class ListCommand implements Callable<Integer> {
             return new WithoutFilter();
         }
         if(filters.size() > 1) {
-            throw new IllegalArgumentException("У команды должен быть 1 параметр");
+            throw new IllegalArgumentException("У команды должен быть 1 параметр!");
         }
 
         return filters.getFirst();
@@ -81,7 +81,7 @@ public class ListCommand implements Callable<Integer> {
             return 0;
         }
         catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.toString());
             return 1;
         }
     }
