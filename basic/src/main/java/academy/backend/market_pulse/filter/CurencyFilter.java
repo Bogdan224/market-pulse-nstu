@@ -4,7 +4,7 @@ import academy.backend.market_pulse.model.Currency;
 import academy.backend.market_pulse.model.Instrument;
 
 public class CurencyFilter implements InstrumentFilter {
-    private Currency currency;
+    private final Currency currency;
 
     public CurencyFilter(Currency currency) {
         this.currency = currency;

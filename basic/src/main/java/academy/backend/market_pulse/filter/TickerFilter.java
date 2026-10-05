@@ -3,7 +3,7 @@ package academy.backend.market_pulse.filter;
 import academy.backend.market_pulse.model.Instrument;
 
 public class TickerFilter implements InstrumentFilter {
-    private String ticker;
+    private final String ticker;
 
     public TickerFilter(String ticker) {
         this.ticker = ticker;

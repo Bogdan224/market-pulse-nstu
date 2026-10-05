@@ -3,7 +3,7 @@ package academy.backend.market_pulse.filter;
 import academy.backend.market_pulse.model.Instrument;
 
 public class TypeFilter implements InstrumentFilter {
-    private String type;
+    private final String type;
 
     public TypeFilter(String type){
         this.type = type;

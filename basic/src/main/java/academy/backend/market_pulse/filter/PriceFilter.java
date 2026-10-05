@@ -6,7 +6,7 @@ import academy.backend.market_pulse.model.Stock;
 import java.math.BigDecimal;
 
 public class PriceFilter implements InstrumentFilter {
-    private BigDecimal yieldDividend;
+    private final BigDecimal yieldDividend;
 
     public PriceFilter(BigDecimal yieldDividend) {
         this.yieldDividend = yieldDividend;
