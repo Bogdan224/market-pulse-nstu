@@ -18,6 +18,6 @@ public class PriceFilter implements InstrumentFilter {
             return false;
         }
 
-        return stock.getDividendYield().equals(yieldDividend);
+        return stock.getDividendYield().compareTo(yieldDividend) >= 0;
     }
 }
