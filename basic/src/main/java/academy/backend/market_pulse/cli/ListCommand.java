@@ -14,17 +14,20 @@ import picocli.CommandLine.Option;
 @Command(name = "list", description = "Список инструментов")
 public class ListCommand implements Callable<Integer> {
 
-    @Option(names = "--type", description = "Фильтр по типу инструмента")
+    @Option(names = "--type", description = "Фильтр по типу инструмента (STOCK, BOND, ETF)")
     private String type;
 
     @Option(names = "--ticker", description = "Фильтр по тикеру")
     private String ticker;
 
-    @Option(names = "--currency", description = "Фильтр по валюте")
+    @Option(names = "--currency", description = "Фильтр по валюте (RUB, USD, EUR)")
     private Currency currency;
 
     @Option(names = "--price", description = "Фильтр по цене акции")
     private BigDecimal price;
+
+    @Option(names = "--price-op", description = "Оператор, определяющий логику сравнения (GE - >=, EQ - ==, LE - <=, LS - <, GR - >)")
+    private PriceFilter.EqualsOperator price_op;
 
     private final InstrumentRepository repository;
 
@@ -44,8 +47,13 @@ public class ListCommand implements Callable<Integer> {
         if(currency != null) {
             filters.add(new CurencyFilter(currency));
         }
-        if(price != null) {
-            filters.add(new PriceFilter(price));
+        if(price != null || price_op != null) {
+            if (price != null && price_op != null) {
+                filters.add(new PriceFilter(price, price_op));
+            }
+            else {
+                throw new IllegalArgumentException("Для фильтра по цене нужно заполнить 2 параметра: price и price-op!");
+            }
         }
 
         if(filters.isEmpty()) {
