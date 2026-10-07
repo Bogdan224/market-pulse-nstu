@@ -3,10 +3,10 @@ package academy.backend.market_pulse.filter;
 import academy.backend.market_pulse.model.Currency;
 import academy.backend.market_pulse.model.Instrument;
 
-public class CurencyFilter implements InstrumentFilter {
+public class CurrencyFilter implements InstrumentFilter {
     private final Currency currency;
 
-    public CurencyFilter(Currency currency) {
+    public CurrencyFilter(Currency currency) {
         this.currency = currency;
     }
 

@@ -11,6 +11,6 @@ public class TypeFilter implements InstrumentFilter {
 
     @Override
     public boolean matches(Instrument instrument) {
-        return instrument.getType().equals(type);
+        return instrument.getType().equals(type.toUpperCase());
     }
 }

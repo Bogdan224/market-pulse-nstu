@@ -1,10 +1,10 @@
 package academy.backend.market_pulse.cli;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.Callable;
 
+import academy.backend.market_pulse.converter.InstrumentFilterConverter;
 import academy.backend.market_pulse.filter.*;
 import academy.backend.market_pulse.model.Currency;
 import academy.backend.market_pulse.repository.InstrumentRepository;
@@ -13,6 +13,9 @@ import picocli.CommandLine.Option;
 
 @Command(name = "list", description = "Список инструментов")
 public class ListCommand implements Callable<Integer> {
+    public enum ListCommandFilter {
+        WITHOUT, BY_TYPE, BY_TICKER, BY_CURRENCY, BY_PRICE
+    }
 
     @Option(names = "--type", description = "Фильтр по типу инструмента (STOCK, BOND, ETF)")
     private String type;
@@ -35,46 +38,51 @@ public class ListCommand implements Callable<Integer> {
         this.repository = repository;
     }
 
-    private InstrumentFilter choseInstrumentFilter() {
-        List<InstrumentFilter> filters = new ArrayList<>();
+    private Map.Entry<ListCommandFilter, List<Object>> getRule() {
+        List<ListCommandFilter> rules = new ArrayList<>();
+        List<Object> params = new ArrayList<>();
 
-        if(type != null) {
-            filters.add(new TypeFilter(type));
+        if (type != null) {
+            rules.add(ListCommandFilter.BY_TYPE);
+            params.add(type);
         }
-        if(ticker != null) {
-            filters.add(new TickerFilter(ticker));
+        if (ticker != null) {
+            rules.add(ListCommandFilter.BY_TICKER);
+            params.add(ticker);
         }
-        if(currency != null) {
-            filters.add(new CurencyFilter(currency));
+        if (currency != null) {
+            rules.add(ListCommandFilter.BY_CURRENCY);
+            params.add(currency);
         }
-        if(price != null || price_op != null) {
+        if (price != null || price_op != null) {
             if (price != null && price_op != null) {
-                filters.add(new PriceFilter(price, price_op));
-            }
-            else {
+                rules.add(ListCommandFilter.BY_PRICE);
+                params.addAll(List.of(price, price_op));
+            } else {
                 throw new IllegalArgumentException("Для фильтра по цене нужно заполнить 2 параметра: price и price-op!");
             }
         }
 
-        if(filters.isEmpty()) {
-            return new WithoutFilter();
+        if (rules.isEmpty()) {
+            rules.add(ListCommandFilter.WITHOUT);
         }
-        if(filters.size() > 1) {
+        if (rules.size() > 1) {
             throw new IllegalArgumentException("У команды должен быть 1 параметр!");
         }
 
-        return filters.getFirst();
+        return new AbstractMap.SimpleEntry<>(rules.getFirst(), params);
     }
 
     @Override
     public Integer call() {
         try {
-            InstrumentFilter filter = choseInstrumentFilter();
+            var pair = getRule();
+            var filter = InstrumentFilterConverter.convert(pair.getKey(), pair.getValue());
 
             int ind = 1;
             for (var instrument : repository) {
-                if(filter.matches(instrument)) {
-                    if(ind == 1) {
+                if (filter.matches(instrument)) {
+                    if (ind == 1) {
                         System.out.println("Список отфильтрованных инструментов:");
                     }
                     System.out.println(ind + ". " + instrument.toString());
@@ -82,13 +90,12 @@ public class ListCommand implements Callable<Integer> {
                 }
             }
 
-            if(ind == 1) {
+            if (ind == 1) {
                 System.out.println("Инструменты по заданному фильтру отсутствуют!");
             }
 
             return 0;
-        }
-        catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             System.err.println(e.toString());
             return 1;
         }

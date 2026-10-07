@@ -10,11 +10,7 @@ public class PriceFilter implements InstrumentFilter {
     private final EqualsOperator price_op;
 
     public enum EqualsOperator {
-        GE,
-        EQ,
-        LE,
-        LS,
-        GR
+        GE, EQ, LE, LS, GR
     }
 
     public PriceFilter(BigDecimal price, EqualsOperator price_op) {
@@ -24,20 +20,19 @@ public class PriceFilter implements InstrumentFilter {
 
     private boolean compareByParam(BigDecimal price, BigDecimal instrumentPrice, EqualsOperator param) {
         return switch (param) {
-            case GE -> price.compareTo(instrumentPrice) >= 0;
-            case EQ -> price.compareTo(instrumentPrice) == 0;
-            case LE -> price.compareTo(instrumentPrice) <= 0;
-            case LS -> price.compareTo(instrumentPrice) < 0;
-            case GR -> price.compareTo(instrumentPrice) > 0;
+            case GE -> instrumentPrice.compareTo(price) >= 0;
+            case EQ -> instrumentPrice.compareTo(price) == 0;
+            case LE -> instrumentPrice.compareTo(price) <= 0;
+            case LS -> instrumentPrice.compareTo(price) < 0;
+            case GR -> instrumentPrice.compareTo(price) > 0;
         };
     }
 
     @Override
     public boolean matches(Instrument instrument) {
-        if(!(instrument instanceof Stock stock)) {
-            return false;
-        }
-
-        return compareByParam(price, stock.getDividendYield(), price_op);
+        return switch (instrument) {
+            case Stock stock -> compareByParam(price, stock.getDividendYield(), price_op);
+            default -> false;
+        };
     }
 }
